@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 5 - Adivinar número</title>
+    <link rel="stylesheet" type="text/css" href="./Numero.css" /> 
+</head>
+<body>
+    <div id="container" class="page-container">
+        <div class="info-container">
+            <button id="reiniciar">Reiniciar</button>
+            <p id="highscore">Highscore: 0</p>
+            <p id="score">Score: 20</p>
+        </div>
+        <div class="container">
+            <div class="selectContainer">
+            <label for="dificultad">Seleccione la dificultad:</label>
+            <select id="dificultad" name="dificultad">
+                <option value="facil">Facil</option>
+                <option value="medio">Medio</option>
+                <option value="dificil">Dificil</option>
+                <option value="imposible">Imposible</option>
+            </select>
+            </div>
+            <div class="title">
+                <h1 id="titulo"></h1>
+            </div>
+            <div class="form-container">
+                <form id="form" action="POST">
+                    <div class="input-container">
+                        <input name="numero" id="numero" type="number" />
+                        <p>Ingrese su número</p>
+                    </div>            
+                    <div class="input-container">
+                        <button type="submit">Probar</button>
+                    </div>
+                    <p id="pista"></p>
+                </form>
+            </div>
+        </div>
+        <div id="modal" class="modal">
+            <div id="modal-content" class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="msgModal"></h2>
+            </div>
+        </div>
+    </div>
+    <script src="./Numero.js"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+* {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+}
+
+html, body {
+    height: 100vh;
+}
+
+.page-container {
+    background-color: #C5DFF8;
+    height: 100%;
+}
+
+.correcto {
+    transition: background-color 2s;
+    background-color: #c5f8c5;
+}
+
+.incorrecto {
+    background-color: #ff7e7e;
+}
+
+h1 {
+    color: #3b4652;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+}
+
+.form-container {
+    display: flex;
+    align-self: center;
+    padding-top: 20px;
+    height: 70%;
+}
+
+#reiniciar {
+    width: 80%;
+    height: 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #91C8E4;
+    border: 1px solid #97b8ec;
+    cursor: pointer;
+}
+
+#reiniciar:hover {
+    background-color: #4682A9;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    margin: 30px;
+}
+
+.input-container p {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+button[type="submit"] {
+    width: 70%;
+    height: 50px;
+    padding: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    background-color: #4682A9;
+    border: 1px solid #5e8ad1;
+    cursor: pointer;
+}
+
+input[type="number"] {
+    width: 33%;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #b49f9f;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 15px;
+}
+
+label, select, input, option {
+    font-weight: 600;
+}
+
+select, option {
+    cursor: pointer;
+}
+
+::placeholder {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    height: 80%;
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0 0 5px;
+    width: 200px;
+}
+
+.info-container p, .info-container button {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 5px;
+}
+
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 20%;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modalCorrecto, .modalIncorrecto {
+    display: flex;
+    flex-direction: column;
+    background-color: #C5DFF8;
+    margin: 15% auto;
+    padding: 3px;
+    border: 1px solid #888;
+    width: 30%;
+    height: 30%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.modalCorrecto {
+    background-color: #c5f8c5;
+}
+
+.modalIncorrecto {
+    background-color: #ff9f9f;
+}
+
+.pCorrecto {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgb(43, 71, 15);
+}
+
+.pIncorrecto {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: red;
+}
+
+#msgModal {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.close {
+    color: #0e0d0d;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    align-self: flex-end;
+}
