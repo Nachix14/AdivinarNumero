@@ -63,7 +63,7 @@ function intento(datos) {
             abrirModal("Muy bajo!", false, 800);
         } else {
             abrirModal("Correcto!", true, 2000);
-            objetivo.innerHTML = `El número encontrado fue el: ${random}`;
+            objetivo.innerHTML = `El número encontrado fue el: ${datos.num}`;
             if (highscores[select.value] < intentos) {
                 highscores[select.value] = intentos;
                 localStorage.setItem(select.value, intentos);
