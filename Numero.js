@@ -4,7 +4,6 @@ const pHighscore = document.getElementById('highscore');
 const score = document.getElementById('score');
 const pista = document.getElementById('pista');
 const objetivo = document.getElementById('objetivo');
-const container = document.getElementById('container');
 const pIntentos = document.getElementById('intento');
 const modal = document.getElementById("modal");
 const modalContent = document.getElementById("modal-content");
@@ -37,7 +36,7 @@ form.addEventListener('submit', function (event) {
         intentos = intento(datosEntrada);
         pIntentos.innerHTML = `Te quedan: ${intentos} intentos`;
     }
-    
+
     pHighscore.innerHTML = `Highscore ${select.value}: ${highscores[select.value]}`;
     score.innerHTML = `Score: ${intentos}`;
 });
@@ -94,7 +93,8 @@ function mostrarIntento(alto, num, intento) {
     alto ? nuevoParrafo.innerHTML = `Intento numero: ${intento}: el numero ${num} fue muy alto` 
     : nuevoParrafo.innerHTML = `Intento numero: ${intento}: el numero ${num} fue muy bajo`;
 
-    intentoContainer.appendChild(nuevoParrafo);
+    const primerParrafo = intentoContainer.firstChild;
+    intentoContainer.insertBefore(nuevoParrafo, primerParrafo);
 }
 
 function generarNumeroAleatorio(dificultad) {
@@ -139,18 +139,14 @@ function abrirModal(msg, estado, timer) {
 
     if (estado) {
         modalContent.classList.add('modalCorrecto');
-        container.classList.add('correcto');
-        pista.classList.add('pCorrecto');
         numero.value = "";
         random = generarNumeroAleatorio(select.value);
     } else {
-        container.classList.add('incorrecto');
         modalContent.classList.add('modalIncorrecto');
         pista.classList.add('pIncorrecto');
     }
 
     timeoutId = setTimeout(() => {
-        estado ? container.classList.remove('correcto') : container.classList.remove('incorrecto');
         modal.style.display = "none";
     }, timer);
 }
@@ -168,7 +164,6 @@ function obtenerMaximo() {
 }
 
 reiniciar.addEventListener('click', function () {
-    container.classList.remove('correcto');
     random = generarNumeroAleatorio(select.value);
     intentos = 20;
     objetivo.innerHTML = "";
