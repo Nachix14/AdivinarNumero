@@ -5,12 +5,14 @@ const score = document.getElementById('score');
 const pista = document.getElementById('pista');
 const objetivo = document.getElementById('objetivo');
 const container = document.getElementById('container');
+const pIntentos = document.getElementById('intento');
 const modal = document.getElementById("modal");
 const modalContent = document.getElementById("modal-content");
 const numero = document.getElementById('numero');
 const msgModal = document.getElementById("msgModal");
 const select = document.getElementById('dificultad');
 const subtitulo = document.getElementById('subtitulo');
+const intentoContainer = document.getElementById('intento-container');
 
 let random = generarNumeroAleatorio(select.value);
 let intentos = 20;
@@ -24,17 +26,18 @@ let highscores = {
 let timeoutId; 
 
 pHighscore.innerHTML = `Highscore ${select.value}: ${highscores[select.value]}`;
-console.log("numero a adivinar: ", random);
+pIntentos.innerHTML = ``;
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
 
     let datosEntrada = { num: numero.value, intentos };
-
+    
     if (numero.value) {
         intentos = intento(datosEntrada);
+        pIntentos.innerHTML = `Te quedan: ${intentos} intentos`;
     }
-
+    
     pHighscore.innerHTML = `Highscore ${select.value}: ${highscores[select.value]}`;
     score.innerHTML = `Score: ${intentos}`;
 });
@@ -46,24 +49,28 @@ document.getElementsByClassName("close")[0].addEventListener("click", function()
 select.addEventListener('change', function () {
     random = generarNumeroAleatorio(select.value);
     intentos = 20;
+    pista.innerHTML = "";
     pHighscore.innerHTML = `Highscore ${select.value}: ${highscores[select.value]}`;
     score.innerHTML = `Score: ${intentos}`;
 });
 
 function intento(datos) {
     let max = obtenerMaximo();
-    if (datos.intentos > 0) {
+    if (datos.intentos > 1) {
         if (datos.num > max || datos.num < 0) {
             pista.innerHTML = `El valor debe ser mayor a 0 y menor a ${max}`;
+            pista.classList.add('pIncorrecto');
             return datos.intentos;
         } 
         if (datos.num > random) {
-            abrirModal("Muy Alto!", false, 800);
+            mostrarIntento(true, datos.num, datos.intentos);
+            abrirModal("Muy Alto!", false, 700);
         } else if (datos.num < random) {
-            abrirModal("Muy bajo!", false, 800);
+            mostrarIntento(false, datos.num, datos.intentos);
+            abrirModal("Muy bajo!", false, 700);
         } else {
-            abrirModal("Correcto!", true, 2000);
-            objetivo.innerHTML = `El número encontrado fue el: ${datos.num}`;
+            objetivo.innerHTML = `El número que encontraste fue el: ${datos.num}`;
+            abrirModal("Ganaste! 😎", true, 2000);
             if (highscores[select.value] < intentos) {
                 highscores[select.value] = intentos;
                 localStorage.setItem(select.value, intentos);
@@ -72,12 +79,22 @@ function intento(datos) {
         }
         return --datos.intentos;
 } else {
-    pista.innerHTML = "Te quedaste sin intentos.";
-    abrirModal("Te quedaste sin intentos!", false, 1000);
+    objetivo.innerHTML = `El número a encontrar era el: ${random}`;
+    pIntentos.innerHTML = "";
+    abrirModal("Te quedaste sin intentos 😑", false, 1000);
     numero.value = "";
     random = generarNumeroAleatorio(select.value);
     return datos.intentos = 20;
 }
+}
+
+function mostrarIntento(alto, num, intento) {
+    const nuevoParrafo = document.createElement('p');
+
+    alto ? nuevoParrafo.innerHTML = `Intento numero: ${intento}: el numero ${num} fue muy alto` 
+    : nuevoParrafo.innerHTML = `Intento numero: ${intento}: el numero ${num} fue muy bajo`;
+
+    intentoContainer.appendChild(nuevoParrafo);
 }
 
 function generarNumeroAleatorio(dificultad) {
@@ -119,6 +136,7 @@ function abrirModal(msg, estado, timer) {
     modalContent.className = "modal-content";
     pista.className = "pista";
     pista.innerHTML = msg;
+
     if (estado) {
         modalContent.classList.add('modalCorrecto');
         container.classList.add('correcto');
@@ -138,33 +156,22 @@ function abrirModal(msg, estado, timer) {
 }
 
 function obtenerMaximo() {
-    let maximo;
-    switch (select.value) {
-        case 'facilisimo':
-            maximo = 20;
-            break;
-        case 'facil':
-            maximo = 100;
-            break;
-        case 'medio':
-            maximo = 50000;
-            break;
-        case 'dificil':
-            maximo = 250000;
-            break;
-        case 'dificilisimo':
-            maximo = 1000000;
-            break;
-        default: break;
-    }
-    return maximo;
+    const maximo = {
+        'facilisimo': 20,
+        'facil': 100,
+        'medio': 50000,
+        'dificil': 250000,
+        'dificilisimo': 1000000
+    };
+
+    return maximo[select.value];
 }
 
 reiniciar.addEventListener('click', function () {
     container.classList.remove('correcto');
     random = generarNumeroAleatorio(select.value);
     intentos = 20;
-    console.log('numero a adivinar: ', random);
+    objetivo.innerHTML = "";
     pista.innerHTML = "";
     numero.value = "";
     score.innerHTML = `Score: ${intentos}`;
