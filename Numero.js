@@ -3,33 +3,37 @@ const reiniciar = document.getElementById('reiniciar');
 const pHighscore = document.getElementById('highscore');
 const score = document.getElementById('score');
 const pista = document.getElementById('pista');
+const objetivo = document.getElementById('objetivo');
 const container = document.getElementById('container');
 const modal = document.getElementById("modal");
 const modalContent = document.getElementById("modal-content");
 const numero = document.getElementById('numero');
 const msgModal = document.getElementById("msgModal");
 const select = document.getElementById('dificultad');
-const titulo = document.getElementById('titulo');
+const subtitulo = document.getElementById('subtitulo');
 
 let random = generarNumeroAleatorio(select.value);
 let intentos = 20;
-let highscore = 0;
 let highscores = {
+    facilisimo: localStorage.getItem('facilisimo') || 0,
     facil: localStorage.getItem('facil') || 0,
     medio: localStorage.getItem('medio') || 0,
     dificil: localStorage.getItem('dificil') || 0,
-    imposible: localStorage.getItem('imposible') || 0
+    dificilisimo: localStorage.getItem('dificilisimo') || 0
 };
 let timeoutId; 
+
 pHighscore.innerHTML = `Highscore ${select.value}: ${highscores[select.value]}`;
 console.log("numero a adivinar: ", random);
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
-    const valor = numero.value;
 
-    let datosEntrada = { num: valor, intentos };
-    intentos = intento(datosEntrada);
+    let datosEntrada = { num: numero.value, intentos };
+
+    if (numero.value) {
+        intentos = intento(datosEntrada);
+    }
 
     pHighscore.innerHTML = `Highscore ${select.value}: ${highscores[select.value]}`;
     score.innerHTML = `Score: ${intentos}`;
@@ -59,9 +63,10 @@ function intento(datos) {
             abrirModal("Muy bajo!", false, 800);
         } else {
             abrirModal("Correcto!", true, 2000);
+            objetivo.innerHTML = `El número encontrado fue el: ${random}`;
             if (highscores[select.value] < intentos) {
                 highscores[select.value] = intentos;
-                localStorage.setItem(select.value, intentos); 
+                localStorage.setItem(select.value, intentos);
             }
             return datos.intentos = 20;
         }
@@ -77,28 +82,33 @@ function intento(datos) {
 
 function generarNumeroAleatorio(dificultad) {
     let maximo;
-    let tituloText;
+    let subtituloText;
     
     switch (dificultad) {
+        case 'facilisimo': 
+            maximo = 20;
+            subtituloText = 'Adivine el número del 0 y veinte, te daré pistas.';
+            break;
         case 'facil':
             maximo = 100;
-            tituloText = 'Adivine el número del 0 y cien, te daré pistas.';
+            subtituloText = 'Adivine el número del 0 y cien, te daré pistas.';
             break;
         case 'medio':
             maximo = 50000;
-            tituloText = 'Adivine el número entre 0 y 100 mil, te daré pistas.';
+            subtituloText = 'Adivine el número entre 0 y 100 mil, te daré pistas.';
             break;
         case 'dificil':
             maximo = 250000;
-            tituloText = 'Adivine el número entre 0 y 250 mil, te daré pistas.';
+            subtituloText = 'Adivine el número entre 0 y 250 mil, te daré pistas.';
             break;
-        default:
+        case 'dificilisimo':
             maximo = 1000000;
-            tituloText = 'Adivine el número entre 0 y 1 millón, te daré pistas.';
+            subtituloText = 'Adivine el número entre 0 y 1 millón, te daré pistas.';
             break;
+        default: break;   
     }
 
-    titulo.innerHTML = tituloText;
+    subtitulo.innerHTML = subtituloText;
     return Math.round(Math.random() * maximo);
 }
 
@@ -130,6 +140,9 @@ function abrirModal(msg, estado, timer) {
 function obtenerMaximo() {
     let maximo;
     switch (select.value) {
+        case 'facilisimo':
+            maximo = 20;
+            break;
         case 'facil':
             maximo = 100;
             break;
@@ -139,9 +152,10 @@ function obtenerMaximo() {
         case 'dificil':
             maximo = 250000;
             break;
-        default:
+        case 'dificilisimo':
             maximo = 1000000;
             break;
+        default: break;
     }
     return maximo;
 }

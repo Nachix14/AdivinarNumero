@@ -1,5 +1,5 @@
 * {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Gochi Hand', cursive;
     margin: 0;
 }
 
@@ -8,7 +8,9 @@ html, body {
 }
 
 .page-container {
-    background-color: #C5DFF8;
+    background: #83a4d4;
+    background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
+    background: linear-gradient(to right, #b6fbff, #83a4d4);
     height: 100%;
 }
 
@@ -21,7 +23,12 @@ html, body {
     background-color: #ff7e7e;
 }
 
+#subtitulo {
+    text-align: center;
+}
+
 h1 {
+    text-align: center;
     color: #3b4652;
 }
 
@@ -36,15 +43,17 @@ form {
     display: flex;
     align-self: center;
     padding-top: 20px;
-    height: 70%;
+    height: 50%;
 }
 
 #reiniciar {
     width: 80%;
     height: 40px;
+    font-family: 'Rubik Iso', cursive;
     font-size: 1rem;
     font-weight: 600;
-    background-color: #91C8E4;
+    background-color: #4682A9;
+    border-radius: 5px;
     border: 1px solid #97b8ec;
     cursor: pointer;
 }
@@ -59,7 +68,7 @@ form {
     align-items: center;
     width: 100%;
     padding: 10px;
-    margin: 30px;
+    margin: 5px;
 }
 
 .input-container p {
@@ -71,6 +80,7 @@ button[type="submit"] {
     width: 70%;
     height: 50px;
     padding: 6px;
+    font-family: 'Rubik Iso', cursive;
     font-size: 1rem;
     font-weight: 600;
     border-radius: 5px;
@@ -90,10 +100,15 @@ input[type="number"] {
 }
 
 label, select, input, option {
+    text-align: center;
+    margin-bottom: 10px;
     font-weight: 600;
 }
 
 select, option {
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid rgb(185, 178, 178);
     cursor: pointer;
 }
 
@@ -104,7 +119,7 @@ select, option {
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-self: center;
     height: 80%;
 }
@@ -191,4 +206,45 @@ select, option {
     font-weight: bold;
     cursor: pointer;
     align-self: flex-end;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        height: 60%;
+    }
+
+    h1 {
+        order: 1;
+    }
+    
+    .page-container {
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: column-reverse;
+    }
+
+    .info-container {
+        align-items: center;
+        align-self: center;
+        margin-bottom: 20px;
+    }
+
+    .input-container p {
+        font-size: 1rem;
+    }
+
+    input[type="number"] {
+        width: 18%;
+        height: 25px;
+    }
+
+    #subtitulo {
+        font-size: 1.2rem;
+    }
+
+    .selectContainer {
+        width: 50%;
+        margin-bottom: 40px;
+    }
+
 }

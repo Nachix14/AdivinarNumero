@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicio 5 - Adivinar número</title>
-    <link rel="stylesheet" type="text/css" href="./Numero.css" /> 
+    <link rel="stylesheet" type="text/css" href="./Ejercicio5.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Iso&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&family=Rubik+Iso&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="container" class="page-container">
@@ -13,18 +17,20 @@
             <p id="highscore">Highscore: 0</p>
             <p id="score">Score: 20</p>
         </div>
+        <h1>Adivinar el número!</h1>
         <div class="container">
             <div class="selectContainer">
-            <label for="dificultad">Seleccione la dificultad:</label>
-            <select id="dificultad" name="dificultad">
-                <option value="facil">Facil</option>
-                <option value="medio">Medio</option>
-                <option value="dificil">Dificil</option>
-                <option value="imposible">Imposible</option>
-            </select>
+                <label for="dificultad">Seleccione la dificultad:</label>
+                <select id="dificultad" name="dificultad">
+                    <option value="facilisimo">Facilísimo</option>
+                    <option value="facil">Fácil</option>
+                    <option value="medio">Medio</option>
+                    <option value="dificil">Difícil</option>
+                    <option value="dificilisimo">Dificilísimo</option>
+                </select>
             </div>
-            <div class="title">
-                <h1 id="titulo"></h1>
+            <div class="subtitulo">
+                <h2 id="subtitulo"></h2>
             </div>
             <div class="form-container">
                 <form id="form" action="POST">
@@ -36,6 +42,7 @@
                         <button type="submit">Probar</button>
                     </div>
                     <p id="pista"></p>
+                    <p id="objetivo"></p>
                 </form>
             </div>
         </div>
@@ -46,6 +53,6 @@
             </div>
         </div>
     </div>
-    <script src="./Numero.js"></script>
+    <script src="./Ejercicio5.js"></script>
 </body>
 </html>
