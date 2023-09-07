@@ -154,9 +154,10 @@ function ayudaPC(datos) {
             }
             return datos.intentos = 20;
         }
+        numero.value = sugerencia;
+        return --datos.intentos;
     }
-    numero.value = sugerencia;
-    return --datos.intentos;
+    return datos.intentos;
 }
 
 function mostrarIntento(alto, num, intento) {
