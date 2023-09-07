@@ -32,8 +32,6 @@ let timeoutId;
 pHighscore.innerHTML = `Highscore ${select.value}: ${highscores[select.value]}`;
 pIntentos.innerHTML = `Te quedan: ${intentos} intentos`;
 
-console.log(random);
-
 form.addEventListener('submit', function (event) {
     event.preventDefault();
 
