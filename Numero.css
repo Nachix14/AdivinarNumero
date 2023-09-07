@@ -14,20 +14,12 @@ html, body {
     height: 100%;
 }
 
-.correcto {
-    transition: background-color 2s;
-    background-color: #c5f8c5;
-}
-
-.incorrecto {
-    background-color: #ff7e7e;
-}
-
 #subtitulo {
     text-align: center;
 }
 
 h1 {
+    margin-bottom: 30px;
     text-align: center;
     color: #3b4652;
 }
@@ -35,7 +27,7 @@ h1 {
 form {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     width: 300px;
 }
@@ -83,15 +75,10 @@ form {
 }
 
 .intento-container {
-    display: flex;
-    flex-direction: column;
     align-self: center;
-    align-items: center;
-    justify-content: center;
-    height: 200px;
-    width: fit-content;
+    max-height: 200px;
     overflow-y: auto;
-    margin-top: 15px;
+    padding: 10px;
 }
 
 .intento-container::-webkit-scrollbar {
@@ -156,9 +143,9 @@ select, option {
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-self: center;
-    height: 80%;
+    height: 70%;
 }
 
 .info-container {
@@ -249,6 +236,16 @@ select, option {
     align-self: flex-end;
 }
 
+@media only screen and (max-width: 1370px) {
+    #numero {
+        height: 40px;
+    }
+
+    .container {
+        height: 70%;
+    }
+}
+
 @media only screen and (max-width: 600px) {
     .container {
         height: 60%;
@@ -313,7 +310,7 @@ select, option {
     #msgModal {
         font-size: 2.5rem;
         font-weight: 700;
-        margin-top: 80px;
+        margin-top: 60px;
         align-self: center;
     }
 }

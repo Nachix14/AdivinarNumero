@@ -22,16 +22,16 @@ let highscores = {
     dificil: localStorage.getItem('dificil') || 0,
     dificilisimo: localStorage.getItem('dificilisimo') || 0
 };
-let timeoutId; 
+let timeoutId;
 
 pHighscore.innerHTML = `Highscore ${select.value}: ${highscores[select.value]}`;
-pIntentos.innerHTML = ``;
+pIntentos.innerHTML = `Te quedan: ${intentos} intentos`;
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
 
     let datosEntrada = { num: numero.value, intentos };
-    
+
     if (numero.value) {
         intentos = intento(datosEntrada);
         pIntentos.innerHTML = `Te quedan: ${intentos} intentos`;
@@ -41,7 +41,7 @@ form.addEventListener('submit', function (event) {
     score.innerHTML = `Score: ${intentos}`;
 });
 
-document.getElementsByClassName("close")[0].addEventListener("click", function() {
+document.getElementsByClassName("close")[0].addEventListener("click", function () {
     document.getElementById("modal").style.display = "none";
 });
 
@@ -60,7 +60,7 @@ function intento(datos) {
             pista.innerHTML = `El valor debe ser mayor a 0 y menor a ${max}`;
             pista.classList.add('pIncorrecto');
             return datos.intentos;
-        } 
+        }
         if (datos.num > random) {
             mostrarIntento(true, datos.num, datos.intentos);
             abrirModal("Muy Alto!", false, 700);
@@ -69,6 +69,7 @@ function intento(datos) {
             abrirModal("Muy bajo!", false, 700);
         } else {
             objetivo.innerHTML = `El número que encontraste fue el: ${datos.num}`;
+            borrarHijos(intentoContainer);
             abrirModal("Ganaste! 😎", true, 2000);
             if (highscores[select.value] < intentos) {
                 highscores[select.value] = intentos;
@@ -77,21 +78,22 @@ function intento(datos) {
             return datos.intentos = 20;
         }
         return --datos.intentos;
-} else {
-    objetivo.innerHTML = `El número a encontrar era el: ${random}`;
-    pIntentos.innerHTML = "";
-    abrirModal("Te quedaste sin intentos 😑", false, 1000);
-    numero.value = "";
-    random = generarNumeroAleatorio(select.value);
-    return datos.intentos = 20;
-}
+    } else {
+        objetivo.innerHTML = `El número a encontrar era el: ${random}`;
+        borrarHijos(intentoContainer);
+        pIntentos.innerHTML = "";
+        abrirModal("Te quedaste sin intentos 😑", false, 1000);
+        numero.value = "";
+        random = generarNumeroAleatorio(select.value);
+        return datos.intentos = 20;
+    }
 }
 
 function mostrarIntento(alto, num, intento) {
     const nuevoParrafo = document.createElement('p');
 
-    alto ? nuevoParrafo.innerHTML = `Intento numero: ${intento}: el numero ${num} fue muy alto` 
-    : nuevoParrafo.innerHTML = `Intento numero: ${intento}: el numero ${num} fue muy bajo`;
+    alto ? nuevoParrafo.innerHTML = `Intento numero: ${intento}: el numero ${num} fue muy alto`
+        : nuevoParrafo.innerHTML = `Intento numero: ${intento}: el numero ${num} fue muy bajo`;
 
     const primerParrafo = intentoContainer.firstChild;
     intentoContainer.insertBefore(nuevoParrafo, primerParrafo);
@@ -100,15 +102,15 @@ function mostrarIntento(alto, num, intento) {
 function generarNumeroAleatorio(dificultad) {
     let maximo;
     let subtituloText;
-    
+
     switch (dificultad) {
-        case 'facilisimo': 
+        case 'facilisimo':
             maximo = 20;
-            subtituloText = 'Adivine el número del 0 y veinte, te daré pistas.';
+            subtituloText = 'Adivine el número entre 0 y veinte, te daré pistas.';
             break;
         case 'facil':
             maximo = 100;
-            subtituloText = 'Adivine el número del 0 y cien, te daré pistas.';
+            subtituloText = 'Adivine el número entre 0 y cien, te daré pistas.';
             break;
         case 'medio':
             maximo = 50000;
@@ -122,11 +124,17 @@ function generarNumeroAleatorio(dificultad) {
             maximo = 1000000;
             subtituloText = 'Adivine el número entre 0 y 1 millón, te daré pistas.';
             break;
-        default: break;   
+        default: break;
     }
 
     subtitulo.innerHTML = subtituloText;
     return Math.round(Math.random() * maximo);
+}
+
+function borrarHijos(contenedor) {
+    while (contenedor.firstChild) {
+        contenedor.removeChild(contenedor.firstChild);
+    }
 }
 
 function abrirModal(msg, estado, timer) {
@@ -166,6 +174,7 @@ function obtenerMaximo() {
 reiniciar.addEventListener('click', function () {
     random = generarNumeroAleatorio(select.value);
     intentos = 20;
+    pIntentos.innerHTML = `Te quedan: ${intentos} intentos`;
     objetivo.innerHTML = "";
     pista.innerHTML = "";
     numero.value = "";
