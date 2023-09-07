@@ -2,6 +2,7 @@ const form = document.getElementById('form');
 const reiniciar = document.getElementById('reiniciar');
 const pHighscore = document.getElementById('highscore');
 const score = document.getElementById('score');
+const container = document.getElementById('container');
 const pista = document.getElementById('pista');
 const objetivo = document.getElementById('objetivo');
 const pIntentos = document.getElementById('intento');
@@ -60,31 +61,51 @@ document.getElementsByClassName("close")[0].addEventListener("click", function (
 });
 
 select.addEventListener('change', function () {
-    select.value === 'dificilisimo2' ? (pista.innerHTML = 'Probá con 500 mil', sugerencia = 500000, numero.value = sugerencia) : pista.innerHTML = "";
+    aplicarNivel(select.value);
+    select.value === 'dificilisimo2' ? (pista.innerHTML = 'Probá con 500 mil', sugerencia = 500000, 
+    pista.classList.add('pCorrecto'), numero.value = sugerencia) : pista.innerHTML = "";
     random = generarNumeroAleatorio(select.value);
     intentos = 20;
     pHighscore.innerHTML = `Highscore ${select.value}: ${highscores[select.value]}`;
     score.innerHTML = `Score: ${intentos}`;
 });
 
+function aplicarNivel(nivel) {
+    const nivelClases = {
+        'facilisimo': 'facilisimo',
+        'facil': 'facil',
+        'medio': 'medio',
+        'dificil': 'dificil',
+        'dificilisimo': 'dificilisimo',
+        'dificilisimo2': 'dificilisimo2'
+    };
+
+    const clase = nivelClases[nivel];
+
+    if (clase) {
+        container.classList.replace(container.classList[0], clase);
+    }
+}
+
 function intento(datos) {
-    let value = Number(datos.num);
+    let numIngresado = Number(datos.num);
     let max = obtenerMaximo();
+
     if (datos.tipo !== 'dificilisimo2') {
         if (datos.intentos > 0) {
-            if (value > max || value < 0) {
+            if (numIngresado > max || numIngresado < 0) {
                 pista.innerHTML = `El valor debe ser mayor a 0 y menor a ${max}`;
                 pista.classList.add('pIncorrecto');
                 return datos.intentos;
             }
-            if (value > random) {
-                mostrarIntento(true, datos.num, datos.intentos);
+            if (numIngresado > random) {
+                mostrarIntento(true, numIngresado, datos.intentos);
                 abrirModal("Muy Alto!", false, 700, datos.intentos);
-            } else if (datos.num < random) {
-                mostrarIntento(false, datos.num, datos.intentos);
+            } else if (numIngresado < random) {
+                mostrarIntento(false, numIngresado, datos.intentos);
                 abrirModal("Muy bajo!", false, 700, datos.intentos);
             } else {
-                objetivo.innerHTML = `El número que encontraste fue el: ${datos.num}`;
+                objetivo.innerHTML = `El número que encontraste fue el: ${numIngresado}`;
                 borrarHijos(intentoContainer);
                 abrirModal("Ganaste! 😎", true, 2000, datos.intentos);
                 random = generarNumeroAleatorio(select.value);
@@ -97,37 +118,45 @@ function intento(datos) {
             return --datos.intentos;
         } 
     } else {
-        if (value === sugerencia) {
-            if (sugerencia > random) {
-                sugerenciaMax = sugerencia;
-                sugerencia = Math.round((sugerenciaMax + sugerenciaMin) / 2);
-                mostrarIntento(true, datos.num, datos.intentos);
-                pista.innerHTML = `Probá con: ${sugerencia}`;
-            } else if (sugerencia < random) {
-                sugerenciaMin = sugerencia;
-                sugerencia = Math.round((sugerenciaMax + sugerenciaMin) / 2);
-                mostrarIntento(false, datos.num, datos.intentos);
-                pista.innerHTML = `Probá con: ${sugerencia}`; 
-            } else {
-                objetivo.innerHTML = `El número que encontraste fue el: ${datos.num}`;
-                borrarHijos(intentoContainer);
-                random = generarNumeroAleatorio(select.value);
-                abrirModal("Ganaste! 😎", true, 2000, datos.intentos);
-                sugerencia = 500000;
-                pista.innerHTML = `Probá con: ${sugerencia}`; 
-                numero.value = sugerencia;
-                sugerenciaMax = 1000000;
-                sugerenciaMin = 0;
-                if (highscores[select.value] < intentos) {
-                    highscores[select.value] = intentos;
-                    localStorage.setItem(select.value, intentos);
-                }
-                return datos.intentos = 20;
-            }
-        }
-        numero.value = sugerencia;
-        return --datos.intentos;
+      return ayudaPC(datos);
     }
+}
+
+function ayudaPC(datos) {
+    let numIngresado = Number(datos.num);
+
+    if (numIngresado === sugerencia) {
+        if (sugerencia > random) {
+            sugerenciaMax = sugerencia;
+            sugerencia = Math.round((sugerenciaMax + sugerenciaMin) / 2);
+            mostrarIntento(true, numIngresado, datos.intentos);
+            pista.classList.add('pCorrecto');
+            pista.innerHTML = `Probá con: ${sugerencia}`;
+        } else if (sugerencia < random) {
+            sugerenciaMin = sugerencia;
+            sugerencia = Math.round((sugerenciaMax + sugerenciaMin) / 2);
+            mostrarIntento(false, numIngresado, datos.intentos);
+            pista.classList.add('pCorrecto');
+            pista.innerHTML = `Probá con: ${sugerencia}`; 
+        } else {
+            objetivo.innerHTML = `El número que encontraste fue el: ${numIngresado}`;
+            borrarHijos(intentoContainer);
+            random = generarNumeroAleatorio(select.value);
+            abrirModal("Ganaste! 😎", true, 2000, datos.intentos);
+            sugerencia = 500000;
+            pista.innerHTML = `Probá con: ${sugerencia}`; 
+            numero.value = sugerencia;
+            sugerenciaMax = 1000000;
+            sugerenciaMin = 0;
+            if (highscores[select.value] < intentos) {
+                highscores[select.value] = intentos;
+                localStorage.setItem(select.value, intentos);
+            }
+            return datos.intentos = 20;
+        }
+    }
+    numero.value = sugerencia;
+    return --datos.intentos;
 }
 
 function mostrarIntento(alto, num, intento) {
@@ -154,7 +183,7 @@ function generarNumeroAleatorio(dificultad) {
             subtituloText = 'Adivine el número entre 0 y cien, te daré pistas.';
             break;
         case 'medio':
-            maximo = 50000;
+            maximo = 100000;
             subtituloText = 'Adivine el número entre 0 y 100 mil, te daré pistas.';
             break;
         case 'dificil':
@@ -210,7 +239,7 @@ function obtenerMaximo() {
     const maximo = {
         'facilisimo': 20,
         'facil': 100,
-        'medio': 50000,
+        'medio': 100000,
         'dificil': 250000,
         'dificilisimo': 1000000,
         'dificisilimo2': 1000000

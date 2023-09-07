@@ -7,11 +7,45 @@ html, body {
     height: 100vh;
 }
 
-.page-container {
+#container {
+    height: 100%;
+
+}
+
+.facilisimo {
+    background: #FFEFBA;
+    background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);
+    background: linear-gradient(to right, #FFFFFF, #FFEFBA);
+}
+
+.facil {
     background: #83a4d4;
     background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
     background: linear-gradient(to right, #b6fbff, #83a4d4);
-    height: 100%;
+}
+
+.medio {
+    background: #CC95C0;
+    background: -webkit-linear-gradient(to right, #7AA1D2, #DBD4B4, #CC95C0);
+    background: linear-gradient(to right, #7AA1D2, #DBD4B4, #CC95C0); 
+}
+
+.dificil {
+    background: #616161;
+    background: -webkit-linear-gradient(to right, #9bc5c3, #616161);
+    background: linear-gradient(to right, #9bc5c3, #616161);
+}
+
+.dificilisimo {
+    background: #DBE6F6;
+    background: -webkit-linear-gradient(to left, #C5796D, #DBE6F6);
+    background: linear-gradient(to left, #C5796D, #DBE6F6);
+}
+
+.dificilisimo2 {
+    background: #ff7e5f;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #feb47b, #ff7e5f);
+    background: linear-gradient(to left, #feb47b, #ff7e5f);
 }
 
 #subtitulo {
@@ -201,23 +235,23 @@ select, option {
 }
 
 .modalCorrecto {
-    background-color: #c5f8c5;
+    background-color: #6edd6e;
 }
 
 .modalIncorrecto {
-    background-color: #a83d3d;
-}
-
-.pCorrecto {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: rgb(43, 71, 15);
+    background-color: #b85b5b;
 }
 
 .pIncorrecto {
     font-size: 1.5rem;
     font-weight: 600;
     color: red;
+}
+
+.pCorrecto {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgb(83, 126, 40);
 }
 
 #msgModal {
@@ -260,7 +294,7 @@ select, option {
         order: 1;
     }
     
-    .page-container {
+    #container {
         display: flex;
         justify-content: space-evenly;
         flex-direction: column-reverse;
@@ -302,14 +336,6 @@ select, option {
         height: 30%;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
         text-align: center;
-    }
-
-    .modalCorrecto {
-        background-color: #c5f8c5;
-    }
-
-    .modalIncorrecto {
-        background-color: #a83d3d;
     }
 
     #msgModal {
