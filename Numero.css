@@ -227,6 +227,11 @@ select, option {
     align-self: center;
 }
 
+#pModal {
+    margin-top: 10px;
+    font-size: 1.7rem;
+}
+
 .close {
     color: #0e0d0d;
     float: right;
