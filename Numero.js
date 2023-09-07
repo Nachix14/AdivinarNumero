@@ -36,7 +36,7 @@ pIntentos.innerHTML = `Te quedan: ${intentos} intentos`;
 form.addEventListener('submit', function (event) {
     event.preventDefault();
 
-    let datosEntrada = { num: numero.value, intentos, tipo: select.value };
+    let datosEntrada = { num: numero.value, intentos, nivel: select.value };
 
     if (numero.value) {
         intentos = intento(datosEntrada);
@@ -91,7 +91,7 @@ function intento(datos) {
     let numIngresado = Number(datos.num);
     let max = obtenerMaximo();
 
-    if (datos.tipo !== 'dificilisimo2') {
+    if (datos.nivel !== 'dificilisimo2') {
         if (datos.intentos > 0) {
             if (numIngresado > max || numIngresado < 0) {
                 pista.innerHTML = `El valor debe ser mayor a 0 y menor a ${max}`;
@@ -131,14 +131,14 @@ function ayudaPC(datos) {
             sugerencia = Math.round((sugerenciaMax + sugerenciaMin) / 2);
             mostrarIntento(true, numIngresado, datos.intentos);
             pista.classList.add('pCorrecto');
-            pista.innerHTML = `Probá con: ${sugerencia}`;
+            pista.innerHTML = `Muy alto, probá con: ${sugerencia}`;
         } else if (sugerencia < random) {
             sugerenciaMin = sugerencia;
             sugerencia = Math.round((sugerenciaMax + sugerenciaMin) / 2);
             mostrarIntento(false, numIngresado, datos.intentos);
             pista.classList.add('pCorrecto');
-            pista.innerHTML = `Probá con: ${sugerencia}`; 
-        } else {
+            pista.innerHTML = `Muy bajo, robá con: ${sugerencia}`;
+        }  else {
             objetivo.innerHTML = `El número que encontraste fue el: ${numIngresado}`;
             borrarHijos(intentoContainer);
             random = generarNumeroAleatorio(select.value);
